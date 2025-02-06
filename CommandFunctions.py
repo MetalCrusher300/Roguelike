@@ -17,7 +17,7 @@ function_mappings = {
     }
 }
 
-tabulator = "\t\t"
+tabulator = "\t"
 
 def checkItems():
     for i in player.items:
@@ -27,13 +27,18 @@ def checkItems():
 def printCommands():
     for key in function_mappings:
         print(f"\t{key} \n"
-              f"{tabulator + function_mappings[key]['desc']}")
+              f"{tabulator}\t{function_mappings[key]['desc']}")
     print()
 
 def useItem(itemID, target):
     item = itemList.get(str(itemID))  # Ensure itemID is a string to match JSON keys
     if target == "self":
         target = player  # Apply the item to the player if target is "self"
+
+    try: target.items.remove(itemID)
+    except:
+        print(tabulator + "Item not in inventory")
+        return
 
     if item:
         effect_type = item["effect_type"]
