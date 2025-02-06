@@ -1,7 +1,23 @@
 from Items import *
 from entity_manager import *
 # from Calculations import *
-from function_mappings import function_mappings
+
+function_mappings = {
+    "checkItems": {
+        "func": (1, lambda: checkItems()),
+        "desc": "Returns the current items in inventory"
+    },
+    "help": {
+        "func": (1, lambda: printCommands()),
+        "desc": "Prints all functions"
+    },
+    "useItem": {
+        "func": (3, lambda itemID, target: useItem(itemID, target)),
+        "desc": "Takes (itemID, target) as arguments"
+    }
+}
+
+tabulator = "\t\t"
 
 def checkItems():
     for i in player.items:
@@ -9,9 +25,9 @@ def checkItems():
     print()
 
 def printCommands():
-    tabulator = "\n\t\t"
     for key in function_mappings:
-        print(f"\t{key} {tabulator + function_mappings[key]['desc']}")
+        print(f"\t{key} \n"
+              f"{tabulator + function_mappings[key]['desc']}")
     print()
 
 def useItem(itemID, target):
@@ -26,8 +42,8 @@ def useItem(itemID, target):
         # Apply the effect based on the effect type
         if effect_type == "health":
             target.changeHealth(value)
-            print(f"{item['name']} used on {target.name}, changing health by {item['value']}.\n"
-                  f"{target.name} is now at {target.hp} HP\n")
+            print(f"{tabulator + item['name']} used on {target.name}, changing health by {item['value']}. \n"
+                  f"{tabulator + target.name} is now at {target.hp} HP\n")
         else:
             print(f"Effect type '{effect_type}' not implemented.")
     else:

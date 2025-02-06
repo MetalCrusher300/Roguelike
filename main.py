@@ -9,8 +9,8 @@ def main():
         except KeyboardInterrupt:
             print("\nExiting...")
             break  # Exit the loop on Ctrl+C
-        except Exception as e:
-            print(f"\tAn error occurred: {e}")
+        # except Exception as e:
+        #     print(f"\tAn error occurred: {e}")
 
 if __name__ == '__main__':
     main()
