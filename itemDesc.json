@@ -1,0 +1,19 @@
+{
+  "itemList": {
+    "0": {
+      "name": "Health Potion",
+      "effect_type": "health",
+      "value": 2
+    },
+    "1": {
+      "name": "Large Health Potion",
+      "effect_type": "health",
+      "value": 4
+    },
+    "2": {
+      "name": "Poison",
+      "effect_type": "health",
+      "value": -3
+    }
+  }
+}
