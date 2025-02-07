@@ -12,15 +12,24 @@ function_mappings = {
         "desc": "Prints all functions"
     },
     "useItem": {
-        "func": (3, lambda itemID, target: useItem(itemID, target)),
+        "func": (2, lambda itemID: useItem(itemID)),
         "desc": "Takes (itemID, target) as arguments"
+    },
+
+    "debug" : {
+        "func" : (2, lambda target : Debug(target)),
+        "desc" : "This is the debug function"
     }
 }
 
 tabulator = "\t"
 
+def Debug(target):
+    entity = entities[target] if target in entities else print(tabulator + "Target not found\n")
+    print(entity.items)
+
 def checkItems():
-    for i in player.items:
+    for i in entities["player"].items:
         print(f"\t{itemList[str(i)]['name']}")
     print()
 
@@ -30,26 +39,36 @@ def printCommands():
               f"{tabulator}\t{function_mappings[key]['desc']}")
     print()
 
-def useItem(itemID, target):
-    item = itemList.get(str(itemID))  # Ensure itemID is a string to match JSON keys
-    if target == "self":
-        target = player  # Apply the item to the player if target is "self"
+def useItem(itemIndex):
+    try:
+        itemIndex = int(itemIndex)
 
-    try: target.items.remove(itemID)
     except:
-        print(tabulator + "Item not in inventory")
+        print(tabulator + f"'{itemIndex}' is not valid index\n")
         return
 
-    if item:
+    if itemIndex <= 0 or itemIndex > (len(entities["player"].items)):
+        print(tabulator + f"'{itemIndex}' is not valid inventory index\n")
+        return
+
+    currentInventory = entities["player"].items
+    itemID = currentInventory[itemIndex - 1]
+    item = itemList[str(itemID)]
+
+    if itemID:
         effect_type = item["effect_type"]
         value = item["value"]
 
         # Apply the effect based on the effect type
         if effect_type == "health":
-            target.changeHealth(value)
-            print(f"{tabulator + item['name']} used on {target.name}, changing health by {item['value']}. \n"
-                  f"{tabulator + target.name} is now at {target.hp} HP\n")
+            entities["player"].changeHealth(value)
+            print(f"{tabulator + item['name']} used on {entities["player"].name}, changing health by {item['value']}. \n"
+                  f"{tabulator + entities["player"].name} is now at {entities["player"].hp} HP\n")
         else:
             print(f"Effect type '{effect_type}' not implemented.")
+            return
     else:
         print(f"Item with ID {itemID} not found.")
+        return
+
+    currentInventory.remove(currentInventory[itemIndex - 1])

@@ -1,0 +1,21 @@
+{
+  "enemies" : {
+    "Metal Slug" : {
+      "MaxHP" : 550,
+      "PhysicalDP" : 0,
+      "ArtsDP" : 0,
+      "Atk" : 130,
+      "DamageType" : "phy",
+      "Speed" : 1.7
+    },
+
+    "Soldier" : {
+      "MaxHP" : 1650,
+      "PhysicalDP" : 100,
+      "ArtsDP" : 0,
+      "Atk" : 200,
+      "DamageType" : "phy",
+      "Speed" : 2
+    }
+  }
+}
